@@ -177,6 +177,9 @@ func (m *Maker) BuildDependencies() string {
 	}
 	for _, item := range m.CbuildIndex.BuildIdx.Executes {
 		content += m.CMakeTargetAddDependencies(item.Execute, item.DependsOn)
+
+		var context = strings.Split(item.Execute, "-")[0]
+		content += m.CMakeTargetAddDependencies(context + "-executes", []string{item.Execute})
 	}
 	if len(content) > 0 {
 		content = "\n\n# Build dependencies" + content
